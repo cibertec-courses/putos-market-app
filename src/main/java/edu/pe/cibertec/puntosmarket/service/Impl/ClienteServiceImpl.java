@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
+    private final CalculadoraPuntos calculadoraPuntos;
     private final ClienteRepository clienteRepository;
 
     public ClienteServiceImpl(ClienteRepository clienteRepository) {
         this.clienteRepository = clienteRepository;
+        this.calculadoraPuntos = new CalculadoraPuntos();
     }
 
     @Override
@@ -30,9 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente acumularPuntos(String dni, Double montoCompra) {
-        if (montoCompra == null || montoCompra <= 0) {
-            throw new RuntimeException("El monto de compra debe ser mayor a cero");
-        }
+        int puntosGanados = calculadoraPuntos.calcularPuntos(montoCompra);
         Optional<Cliente> resultado = clienteRepository.findByDni(dni);
         if (!resultado.isPresent()) {
             throw new RuntimeException("No existe un cliente con el DNI " + dni);
@@ -41,7 +41,6 @@ public class ClienteServiceImpl implements ClienteService {
         if (!cliente.getActivo()) {
             throw new RuntimeException("El cliente esta inactivo");
         }
-        int puntosGanados = (int) (montoCompra / 10);
         cliente.setPuntos(cliente.getPuntos() + puntosGanados);
         return clienteRepository.save(cliente);
     }

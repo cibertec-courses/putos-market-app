@@ -1,4 +1,4 @@
-package edu.pe.cibertec.puntosmarket.service;
+package edu.pe.cibertec.puntosmarket.service.Impl;
 
 public class CalculadoraPuntos {
 
