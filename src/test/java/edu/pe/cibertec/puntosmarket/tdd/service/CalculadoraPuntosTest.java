@@ -1,4 +1,4 @@
-package edu.pe.cibertec.puntosmarket.service;
+package edu.pe.cibertec.puntosmarket.tdd.service;
 
 import edu.pe.cibertec.puntosmarket.service.Impl.CalculadoraPuntos;
 import org.junit.jupiter.api.BeforeEach;
